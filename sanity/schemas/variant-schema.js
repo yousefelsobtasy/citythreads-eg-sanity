@@ -4,6 +4,12 @@ const variantSchema = {
     type: "object",
     fields: [
         {
+            name: "amount",
+            title: "Amount",
+            type: "number",
+            vaildation: (Rule) => Rule.required()
+        },
+        {
             name: "color",
             title: "Color",
             type: "string",

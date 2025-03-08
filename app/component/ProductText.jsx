@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import ProductSpecs from './ProductSpecs';
-import { useCartStore } from "../store/useCartStore";
-import { useWixClient } from "../hooks/useWixClient";
 import { FiChevronRight, FiChevronDown } from 'react-icons/fi';
 import useNewCartStore from '../store/newCartStore';
 
@@ -107,40 +105,14 @@ const ProductText = ({ product }) => {
                 </p>
             )}
 
-            {additionalInfoSections && additionalInfoSections.length > 0 && (
-                <div className="border-t border-gray-200 pt-4">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                        Additional Product Information
-                    </h3>
-                    <ul className="space-y-4">
-                        {additionalInfoSections.map((section, index) => {
-                            const [isOpen, setIsOpen] = useState(false);
-                            return (
-                                <li key={index} className="bg-gray-50 p-4 rounded-lg shadow-sm">
-                                    <div
-                                        className="flex items-center justify-between cursor-pointer"
-                                        onClick={() => setIsOpen((prev) => !prev)}
-                                    >
-                                        <h4 className="text-base font-medium text-gray-800">
-                                            {section.title}
-                                        </h4>
-                                        {isOpen ? (
-                                            <FiChevronDown className="text-gray-600 text-lg" />
-                                        ) : (
-                                            <FiChevronRight className="text-gray-600 text-lg" />
-                                        )}
-                                    </div>
-                                    {isOpen && (
-                                        <p className="text-sm text-gray-600 mt-2">
-                                            {section.description}
-                                        </p>
-                                    )}
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </div>
-            )}
+            <div className="border-t border-gray-200 pt-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                    Description
+                </h3>
+                <p>
+                    {product.desciption}
+                </p>
+            </div>
 
             {/* Add to Cart Button */}
             <button

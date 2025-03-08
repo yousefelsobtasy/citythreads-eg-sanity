@@ -29,6 +29,12 @@ const productSchema = {
             options: { hotspot: true },
         },
         {
+            name: "amount",
+            title: "Amount",
+            type: "number",
+            description: "If there is no variants fill this please so no as not to lead to errors",
+        },
+        {
             name: "defaultPrice",
             title: "Default Price",
             type: "number",
