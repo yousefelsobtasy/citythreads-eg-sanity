@@ -20,12 +20,15 @@ export async function getAllProducts() {
             },
     defaultPrice,
     discountPrice,
+    amount,
     "variants": variants[]{
     _key,
+    _type,
+    amount,
+    size,
       color,
-      size,
-      price,
-      discount
+      variantDiscountPrice,
+      variantPrice
     }
   }`;
 
@@ -46,12 +49,15 @@ export async function getProductById(id) {
             },
     defaultPrice,
     discountPrice,
+    amount,
         "variants": variants[]{
     _key,
+    _type,
+    amount,
+    size,
       color,
-      size,
-      price,
-      discount
+      variantDiscountPrice,
+      variantPrice
     }
 
   }`;
@@ -72,12 +78,15 @@ export async function getProductBySlug(slug) {
             },
     defaultPrice,
     discountPrice,
+    amount,
         "variants": variants[]{
     _key,
+    _type,
+    amount,
+    size, 
       color,
-      size,
-      price,
-      discount
+      variantDiscountPrice,
+      variantPrice
     }
 
   }`;

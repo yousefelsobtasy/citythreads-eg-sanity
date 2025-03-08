@@ -21,9 +21,9 @@ export default async function SinglePage({ params }) {
                             <div className="w-full md:w-1/2">
                                 <ProductImgs name={product.title} images={product.images} />
                             </div>
-                            {/* <div className="w-full md:w-1/2 ">
-                        <ProductText product={product} />
-                        </div> */}
+                            <div className="w-full md:w-1/2 ">
+                                <ProductText product={product} />
+                            </div>
                         </>
                     }
                 </div>

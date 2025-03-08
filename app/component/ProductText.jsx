@@ -12,6 +12,11 @@ const ProductText = ({ product }) => {
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const [showMessage, setShowMessage] = useState(false);
 
+    const variantsAmount =
+        (product.variants?.reduce((a, item) => a + (item.amount || 0), 0) || 0)
+
+
+    const isAvailable = variantsAmount || product.amount
 
     const { addToCart } = useNewCartStore();
 
@@ -23,15 +28,15 @@ const ProductText = ({ product }) => {
         setShowMessage(true);
 
 
-        addToCart({
-            id: selectedVariant?._id,
-            name: name,
-            imgUrl: product.image[0].url,
-            size: selectedVariant?.choices?.Size,
-            color: selectedVariant?.choices?.Color,
-            price: selectedVariant?.variant?.priceData?.discountedPrice || selectedVariant?.variant?.priceData?.price,
-            quantity: quantity,
-        });
+        // addToCart({
+        //     id: selectedVariant?._id,
+        //     name: name,
+        //     imgUrl: product.image[0].url,
+        //     size: selectedVariant?.choices?.Size,
+        //     color: selectedVariant?.choices?.Color,
+        //     price: selectedVariant?.variant?.priceData?.discountedPrice || selectedVariant?.variant?.priceData?.price,
+        //     quantity: quantity,
+        // });
 
 
         setTimeout(() => {
@@ -46,10 +51,15 @@ const ProductText = ({ product }) => {
         }
     }, [isAvailable]);
 
+
+    useEffect(() => {
+        console.log(selectedVariant)
+    }, [selectedVariant])
+
     return (
         <div className="flex flex-col gap-8 p-6 border border-gray-300 rounded-lg bg-white shadow-md relative">
 
-            {/* {showPopup && (
+            {showPopup && (
                 <div
                     className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 p-5 z-20 rounded-lg"
                     onClick={() => setShowPopup(false)}
@@ -60,6 +70,7 @@ const ProductText = ({ product }) => {
                     >
                         <p className="text-gray-700 mb-2">
                             Try clicking on <strong>every Size</strong> to explore its unique <strong>color options</strong>!
+                            <p>( click on ever option )</p>
                         </p>
                         <button
                             id="close-popup-btn"
@@ -71,33 +82,30 @@ const ProductText = ({ product }) => {
                         </button>
                     </div>
                 </div>
-            )} */}
+            )}
 
             <div className="flex flex-col">
-                {priceData?.discountedPrice ? (
+                {product.discountPrice ? (
                     <div className="flex items-baseline gap-2">
                         <span className="text-gray-500 line-through text-lg">
-                            L.E {currentVariantPrice.price ? currentVariantPrice.price : priceData.price}
+                            L.E {product.defaultPrice}
                         </span>
                         <span className="text-red-600 text-2xl font-semibold">
-                            L.E {currentVariantPrice.discountedPrice ? currentVariantPrice.discountedPrice : priceData.discountedPrice}
+                            L.E {product.defaultPrice - product.discountPrice}
                         </span>
                     </div>
                 ) : (
                     <span className="text-xl font-medium text-gray-800">
-                        L.E {currentVariantPrice.price ? currentVariantPrice.price : priceData.price}
+                        L.E {product.defaultPrice}
                     </span>
                 )}
             </div>
 
-            {isAvailable ? (
+            {variantsAmount ? (
                 <ProductSpecs
-                    variants={variants}
-                    productOptions={productOptions}
-                    selectedVariant={selectedVariant}
+                    product={product}
+                    variantsAmount={variantsAmount}
                     setSelectedVariant={setSelectedVariant}
-                    quantity={quantity}
-                    setQuantity={setQuantity}
                 />
             ) : (
                 <p className="text-gray-500 mt-4">
@@ -105,14 +113,14 @@ const ProductText = ({ product }) => {
                 </p>
             )}
 
-            <div className="border-t border-gray-200 pt-4">
+            {product.description && <div className="border-t border-gray-200 pt-4">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">
                     Description
                 </h3>
                 <p>
-                    {product.desciption}
+                    {product.description}
                 </p>
-            </div>
+            </div>}
 
             {/* Add to Cart Button */}
             <button

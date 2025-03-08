@@ -2,12 +2,13 @@ import Link from "next/link";
 import Image from "next/image";
 
 const ProductList = ({ products }) => {
-    console.log(products)
+    const variantsAmount = products.reduce((ac, product) => ac + (product.variants?.reduce((a, item) => a + (item.amount || 0), 0) || 0), 0)
+
     return (
         <>
             {products.map((product) => (
                 <div key={product._id} className="col-span-1 row-span-1 px-1 max-h-max relative">
-                    {(!product.variants?.length) && (
+                    {(product.amount <= 0 || !product.variants?.length || variantsAmount) && (
                         <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded z-20">
                             Out of Stock
                         </div>

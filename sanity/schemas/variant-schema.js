@@ -10,14 +10,14 @@ const variantSchema = {
             vaildation: (Rule) => Rule.required()
         },
         {
-            name: "color",
-            title: "Color",
+            name: "size",
+            title: "Size",
             type: "string",
             validation: (Rule) => Rule.required(),
         },
         {
-            name: "size",
-            title: "Size",
+            name: "color",
+            title: "Color",
             type: "string",
             validation: (Rule) => Rule.required(),
         },
