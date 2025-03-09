@@ -27,6 +27,10 @@ export async function getAllProducts() {
     amount,
     size,
       color,
+      "images": images[]{
+                "_key": _key,
+                "imgUrl": asset->url
+            },
       variantDiscountPrice,
       variantPrice
     }
@@ -40,11 +44,13 @@ export async function getProductById(id) {
   const query = `*[_type == "product" && _id == $id][0]{
     _id,
     _createdAt,
+    _type,
     title,
     "slug": slug.current,
     description,
     "images": images[]{
                 "_key": _key,
+                _type,
                 "imgUrl": asset->url
             },
     defaultPrice,
@@ -56,6 +62,11 @@ export async function getProductById(id) {
     amount,
     size,
       color,
+      "images": images[]{
+                "_key": _key,
+                _type,
+                "imgUrl": asset->url
+            },
       variantDiscountPrice,
       variantPrice
     }
@@ -69,11 +80,13 @@ export async function getProductBySlug(slug) {
   const query = `*[_type == "product" && slug.current == $slug][0]{
     _id,
     _createdAt,
+    _type,
     title,
     "slug": slug.current,
     description,
     "images": images[]{
                 "_key": _key,
+                _type,
                 "imgUrl": asset->url
             },
     defaultPrice,
@@ -85,6 +98,11 @@ export async function getProductBySlug(slug) {
     amount,
     size, 
       color,
+      "images": images[]{
+                "_key": _key,
+                _type,
+                "imgUrl": asset->url
+            },
       variantDiscountPrice,
       variantPrice
     }
@@ -99,6 +117,7 @@ export async function getAllCollections() {
   const query = `*[_type == "collection"]{
     _id,
     _createdAt,
+    _type,
     title,
     "slug": slug.current,
     "collectionImage":collectionImage.asset->url,
@@ -113,6 +132,7 @@ export async function getCollectionBySlug(slug) {
   const query = `*[_type == "collection" && slug.current == $slug][0]{
     _id,
     _createdAt,
+    _type,
     title,
     "slug": slug.current,
     "collectionImage":collectionImage.asset->url,

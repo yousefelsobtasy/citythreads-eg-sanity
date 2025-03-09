@@ -9,8 +9,6 @@ export default async function SinglePage({ params }) {
 
     const product = await getProductBySlug(slug);
 
-    console.log(product)
-
     try {
 
         return (

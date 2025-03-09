@@ -22,6 +22,13 @@ const variantSchema = {
             validation: (Rule) => Rule.required(),
         },
         {
+            name: "images",
+            title: "Images",
+            type: "array",
+            of: [{ type: "image" }],
+            options: { hotspot: true },
+        },
+        {
             name: "variantPrice",
             title: "Variant Price",
             type: "number",

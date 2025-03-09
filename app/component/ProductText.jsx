@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import ProductSpecs from './ProductSpecs';
 import { FiChevronRight, FiChevronDown } from 'react-icons/fi';
 import useNewCartStore from '../store/newCartStore';
+import useVariantImgsStore from '../store/variantImgsStore';
 
 const ProductText = ({ product }) => {
     const [showPopup, setShowPopup] = useState(false);
@@ -12,9 +13,10 @@ const ProductText = ({ product }) => {
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const [showMessage, setShowMessage] = useState(false);
 
+    const setVariantImgsSrc = useVariantImgsStore(state => state.setVariantImgsSrc) // {setVariantImgsSrc}
+
     const variantsAmount =
         (product.variants?.reduce((a, item) => a + (item.amount || 0), 0) || 0)
-
 
     const isAvailable = variantsAmount || product.amount
 
@@ -54,6 +56,7 @@ const ProductText = ({ product }) => {
 
     useEffect(() => {
         console.log(selectedVariant)
+        if (selectedVariant?.length) setVariantImgsSrc(selectedVariant?.[0].images)
     }, [selectedVariant])
 
     return (
