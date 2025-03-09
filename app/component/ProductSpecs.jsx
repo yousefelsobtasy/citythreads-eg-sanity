@@ -5,11 +5,12 @@ import { FiMinus, FiPlus } from 'react-icons/fi';
 const ProductSpecs = ({
     product,
     variantsAmount,
+    productQuantity,
+    setProductQuantity,
     setSelectedVariant
 }) => {
     const [selectedOptions, setSelectedOptions] = useState({});
     const [countInStock, setCountInStock] = useState(0);
-    const [productQuantity, setProductQuantity] = useState(1)
 
     const productOptions = product.variants.map(item => {
         return {
@@ -87,7 +88,7 @@ const ProductSpecs = ({
             return product.variants.filter(item =>
                 item.size === selectedOptions?.size
                 && item.color === selectedOptions?.color
-            )
+            )[0]
         })
     }, [selectedOptions])
 

@@ -3,13 +3,13 @@
 import { useEffect, useState } from 'react';
 import ProductSpecs from './ProductSpecs';
 import { FiChevronRight, FiChevronDown } from 'react-icons/fi';
-import useNewCartStore from '../store/newCartStore';
+import cartStore from '../store/cartStore';
 import useVariantImgsStore from '../store/variantImgsStore';
 
 const ProductText = ({ product }) => {
     const [showPopup, setShowPopup] = useState(false);
     const [selectedVariant, setSelectedVariant] = useState(null);
-    const [quantity, setQuantity] = useState(1);
+    const [productQuantity, setProductQuantity] = useState(1)
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const [showMessage, setShowMessage] = useState(false);
 
@@ -20,27 +20,31 @@ const ProductText = ({ product }) => {
 
     const isAvailable = variantsAmount || product.amount
 
-    const { addToCart } = useNewCartStore();
+    const { addToCart } = cartStore();
 
     const handleAddToCart = () => {
-        if (!isAvailable || !selectedVariant) return;
+        if (!isAvailable || !selectedVariant) {
+            console.error("No variant selected!");
+            return;
+        }
 
+        console.log("Adding to cart:", selectedVariant); // Debugging
 
         setIsButtonDisabled(true);
         setShowMessage(true);
 
+        addToCart({
+            id: selectedVariant._key,
+            name: `Product ${selectedVariant.size} - ${selectedVariant.color}`,
+            size: selectedVariant.size,
+            color: selectedVariant.color,
+            price: selectedVariant.variantDiscountPrice,
+            originalPrice: selectedVariant.variantPrice,
+            quantity: productQuantity,
+            imgUrl: selectedVariant.images.length > 0 ? selectedVariant.images[0].imgUrl : "",
+        });
 
-        // addToCart({
-        //     id: selectedVariant?._id,
-        //     name: name,
-        //     imgUrl: product.image[0].url,
-        //     size: selectedVariant?.choices?.Size,
-        //     color: selectedVariant?.choices?.Color,
-        //     price: selectedVariant?.variant?.priceData?.discountedPrice || selectedVariant?.variant?.priceData?.price,
-        //     quantity: quantity,
-        // });
-
-
+        // Re-enable button after 1.5s
         setTimeout(() => {
             setIsButtonDisabled(false);
             setShowMessage(false);
@@ -108,6 +112,8 @@ const ProductText = ({ product }) => {
                 <ProductSpecs
                     product={product}
                     variantsAmount={variantsAmount}
+                    productQuantity={productQuantity}
+                    setProductQuantity={setProductQuantity}
                     setSelectedVariant={setSelectedVariant}
                 />
             ) : (

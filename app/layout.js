@@ -6,7 +6,7 @@ import Cart from "./component/Cart";
 import Footer from "./component/Footer";
 import Loading from "./component/Loading";
 import useLoadingStore from "./store/useLoadingStore";
-import useNewCartStore from "./store/newCartStore";
+import useNewCartStore from "./store/cartStore";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 

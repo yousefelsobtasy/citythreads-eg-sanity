@@ -2,7 +2,7 @@
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 
-const useNewCartStore = create(
+const useCartStore = create(
   persist(
     (set, get) => ({
       cartItems: [],
@@ -14,7 +14,10 @@ const useNewCartStore = create(
       // Initialize cart items from local storage
       initializeCart: () => {
         const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-        set({ cartItems: storedCartItems, cartCount: storedCartItems.length });
+        set({
+          cartItems: storedCartItems,
+          cartCount: storedCartItems.reduce((sum, item) => sum + item.quantity, 0),
+        });
       },
 
       // Add item to cart
@@ -34,14 +37,14 @@ const useNewCartStore = create(
         }
 
         set({ cartItems: updatedCartItems, cartCount: updatedCartItems.length });
-        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+        localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
       },
 
       // Remove item from cart
       removeFromCart: (item) => {
         const updatedCartItems = get().cartItems.filter(e => e.id !== item.id);
         set({ cartItems: updatedCartItems, cartCount: updatedCartItems.length });
-        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+        localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
       },
 
       // Clear cart
@@ -51,10 +54,10 @@ const useNewCartStore = create(
       },
     }),
     {
-      name: 'cart-storage', // unique name for the storage
-      getStorage: () => localStorage, // specify localStorage as the storage
+      name: 'cart-storage',
+      getStorage: () => localStorage,
     }
   )
 );
 
-export default useNewCartStore;
+export default useCartStore;
