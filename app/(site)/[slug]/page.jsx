@@ -1,7 +1,7 @@
 import ProductImgs from "../component/ProductImgs";
 import ProductText from "./../component/ProductText";
 import NotFound from "../component/NotFound";
-import { getProductBySlug } from "../../sanity/sanity-utils";
+import { getProductBySlug } from "../../../sanity/sanity-utils";
 
 export default async function SinglePage({ params }) {
 

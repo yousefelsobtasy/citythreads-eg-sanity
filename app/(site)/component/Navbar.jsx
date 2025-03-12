@@ -12,7 +12,6 @@ import { usePathname } from "next/navigation"
 const Navbar = () => {
     const [lastScrollY, setLastScrollY] = useState(0);
     const [show, setShow] = useState(true);
-    const pathname = usePathname()
 
 
     // const handleScroll = () => {
@@ -31,10 +30,6 @@ const Navbar = () => {
     //     window.addEventListener("scroll", handleScroll);
     //     return () => window.removeEventListener("scroll", handleScroll);
     // }, [lastScrollY]);
-
-    if (/^\/admin/.test(pathname)) {
-        return (<></>)
-    }
 
     return (
         <header

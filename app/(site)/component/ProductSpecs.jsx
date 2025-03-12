@@ -1,6 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { FiMinus, FiPlus } from 'react-icons/fi';
+import useVariantImgsStore from '../store/variantImgsStore';
+
 
 const ProductSpecs = ({
     product,
@@ -71,8 +73,6 @@ const ProductSpecs = ({
     useEffect(() => {
         if (variantsAmount <= 0) return
 
-        setCountInStock(variantsAmount || product.amount)
-
         const firstVisibleChoice = productOptions[0]
         if (firstVisibleChoice) {
             setSelectedOptions({
@@ -83,13 +83,21 @@ const ProductSpecs = ({
 
     }, [])
 
+
+    const setVariantImgsSrc = useVariantImgsStore(state => state.setVariantImgsSrc) // {setVariantImgsSrc}
+
     useEffect(() => {
-        setSelectedVariant(() => {
-            return product.variants.filter(item =>
-                item.size === selectedOptions?.size
-                && item.color === selectedOptions?.color
-            )[0]
-        })
+        const selectedVariant = product.variants.filter(item =>
+            item.size === selectedOptions?.size
+            && item.color === selectedOptions?.color
+        )[0]
+
+        setCountInStock(selectedVariant?.amount || product.amount || 0)
+
+        setSelectedVariant(() => selectedVariant)
+
+        Array.isArray(selectedVariant?.images) ? setVariantImgsSrc(selectedVariant.images) : setVariantImgsSrc([])
+        console.log(selectedVariant)
     }, [selectedOptions])
 
     return (

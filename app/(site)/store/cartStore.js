@@ -16,7 +16,7 @@ const useCartStore = create(
         const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
         set({
           cartItems: storedCartItems,
-          cartCount: storedCartItems.reduce((sum, item) => sum + item.quantity, 0),
+          cartCount: storedCartItems.length,
         });
       },
 

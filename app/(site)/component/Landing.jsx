@@ -4,7 +4,7 @@ import SectionLoading from "./SectionLoading";
 import Hero from "./Hero";
 import { Suspense } from "react";
 import Link from "next/link";
-import { getCollectionBySlug, getProductById } from "../../sanity/sanity-utils";
+import { getCollectionBySlug, getProductById } from "../../../sanity/sanity-utils";
 
 export default async function Landing() {
     try {

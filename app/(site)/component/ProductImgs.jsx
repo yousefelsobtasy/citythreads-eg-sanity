@@ -14,7 +14,7 @@ const ProductImgs = ({ name, images = [] }) => {
     );
 
     useEffect(() => {
-        const newImages = variantImgsSrc?.length ? variantImgsSrc : images;
+        const newImages = variantImgsSrc?.length > 0 ? variantImgsSrc : images;
         setImagesSrc(newImages);
 
         if (newImages.length > 0) {

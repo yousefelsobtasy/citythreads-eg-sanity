@@ -8,7 +8,7 @@ const ProductList = ({ products }) => {
         <>
             {products.map((product) => (
                 <div key={product._id} className="col-span-1 row-span-1 px-1 max-h-max relative">
-                    {(product.amount <= 0 || !product.variants?.length || variantsAmount) && (
+                    {(product.amount <= 0 || !(product.variants?.length > 0) || !variantsAmount) && (
                         <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded z-20">
                             Out of Stock
                         </div>
@@ -31,7 +31,7 @@ const ProductList = ({ products }) => {
                             />
                             {product.discountPrice && product.discountPrice < product.defaultPrice && (
                                 <div className="absolute top-2 right-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded z-20">
-                                    {Math.round(((product.defaultPrice - product.discountPrice) / product.defaultPrice) * 100)}% OFF
+                                    {Math.round((product.discountPrice / product.defaultPrice) * 100)}% OFF
                                 </div>
                             )}
                         </div>
@@ -44,7 +44,7 @@ const ProductList = ({ products }) => {
                                     </p>
                                 )}
                                 <h3 className="font-bold mt-5">
-                                    L.E {product.discountPrice || product.defaultPrice}
+                                    L.E {product.discountPrice ? product.defaultPrice - product.discountPrice : product.defaultPrice}
                                 </h3>
                             </div>
                             <button className="w-full border-[1px] border-stone-950 text-center p-3 rounded-md">

@@ -3,8 +3,7 @@
 import { useEffect, useState } from 'react';
 import ProductSpecs from './ProductSpecs';
 import { FiChevronRight, FiChevronDown } from 'react-icons/fi';
-import cartStore from '../store/cartStore';
-import useVariantImgsStore from '../store/variantImgsStore';
+import useCartStore from '../store/cartStore';
 
 const ProductText = ({ product }) => {
     const [showPopup, setShowPopup] = useState(false);
@@ -13,14 +12,12 @@ const ProductText = ({ product }) => {
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const [showMessage, setShowMessage] = useState(false);
 
-    const setVariantImgsSrc = useVariantImgsStore(state => state.setVariantImgsSrc) // {setVariantImgsSrc}
-
     const variantsAmount =
         (product.variants?.reduce((a, item) => a + (item.amount || 0), 0) || 0)
 
     const isAvailable = variantsAmount || product.amount
 
-    const { addToCart } = cartStore();
+    const { addToCart } = useCartStore();
 
     const handleAddToCart = () => {
         if (!isAvailable || !selectedVariant) {
@@ -29,19 +26,20 @@ const ProductText = ({ product }) => {
         }
 
         console.log("Adding to cart:", selectedVariant); // Debugging
+        console.log("Adding to cart:", product); // Debugging
 
         setIsButtonDisabled(true);
         setShowMessage(true);
 
         addToCart({
             id: selectedVariant._key,
-            name: `Product ${selectedVariant.size} - ${selectedVariant.color}`,
+            name: product.name,
             size: selectedVariant.size,
             color: selectedVariant.color,
-            price: selectedVariant.variantDiscountPrice,
+            price: selectedVariant.variantPrice - selectedVariant.variantDiscountPrice,
             originalPrice: selectedVariant.variantPrice,
             quantity: productQuantity,
-            imgUrl: selectedVariant.images.length > 0 ? selectedVariant.images[0].imgUrl : "",
+            imgUrl: selectedVariant.images?.length > 0 ? selectedVariant.images[0]?.imgUrl : product.images[0]?.imgUrl,
         });
 
         // Re-enable button after 1.5s
@@ -56,12 +54,6 @@ const ProductText = ({ product }) => {
             setShowPopup(true);
         }
     }, [isAvailable]);
-
-
-    useEffect(() => {
-        console.log(selectedVariant)
-        if (selectedVariant?.length) setVariantImgsSrc(selectedVariant?.[0].images)
-    }, [selectedVariant])
 
     return (
         <div className="flex flex-col gap-8 p-6 border border-gray-300 rounded-lg bg-white shadow-md relative">
@@ -92,7 +84,20 @@ const ProductText = ({ product }) => {
             )}
 
             <div className="flex flex-col">
-                {product.discountPrice ? (
+                {selectedVariant?.variantDiscountPrice ? (
+                    <div className="flex items-baseline gap-2">
+                        <span className="text-gray-500 line-through text-lg">
+                            L.E {selectedVariant.variantPrice}
+                        </span>
+                        <span className="text-red-600 text-2xl font-semibold">
+                            L.E {selectedVariant.variantPrice - selectedVariant.variantDiscountPrice}
+                        </span>
+                    </div>
+                ) : selectedVariant?.variantPrice ? (
+                    <span className="text-xl font-medium text-gray-800">
+                        L.E {selectedVariant.variantPrice}
+                    </span>
+                ) : product.discountPrice ? (
                     <div className="flex items-baseline gap-2">
                         <span className="text-gray-500 line-through text-lg">
                             L.E {product.defaultPrice}
@@ -106,6 +111,7 @@ const ProductText = ({ product }) => {
                         L.E {product.defaultPrice}
                     </span>
                 )}
+
             </div>
 
             {variantsAmount ? (

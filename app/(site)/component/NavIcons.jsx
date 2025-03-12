@@ -7,13 +7,13 @@ import { IoCartOutline } from "react-icons/io5";
 import { VscAccount } from "react-icons/vsc";
 import { IoSearchOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
-import useNewCartStore from "../store/cartStore"
+import useCartStore from "../store/cartStore"
 
 const NavIcons = () => {
     const [isOpen, setIsOpen] = useState('');
     // const [isLoading, setIsLoading] = useState(false);
 
-    const { cartCount, setIsCartOpen } = useNewCartStore()
+    const { cartCount, setIsCartOpen } = useCartStore()
 
 
     useEffect(() => {

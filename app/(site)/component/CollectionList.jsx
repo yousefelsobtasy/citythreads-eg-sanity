@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { getAllCollections } from "../../sanity/sanity-utils";
+import { getAllCollections } from "../../../sanity/sanity-utils";
 import { motion } from "framer-motion";
 
 const CollectionList = () => {
