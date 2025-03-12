@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getCollectionBySlug, getAllProducts } from "../../sanity/sanity-utils";
+import { getCollectionBySlug, getAllProducts } from "../../../sanity/sanity-utils";
 import ProductList from "../component/ProductList";
 
 export default async function Page({ searchParams }) {
