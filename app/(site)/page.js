@@ -1,3 +1,5 @@
+export const fetchCache = 'force-no-store';
+
 import Landing from "./component/Landing"
 
 const metadata = {
