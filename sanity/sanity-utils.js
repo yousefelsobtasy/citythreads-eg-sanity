@@ -4,7 +4,7 @@ const client = createClient({
   projectId: "d3jjeys1",
   dataset: "production",
   apiVersion: "2024-03-05",
-  useCdn: false,
+  useCdn: true,
 });
 
 // Fetch all products
