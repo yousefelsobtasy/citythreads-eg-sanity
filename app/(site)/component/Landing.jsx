@@ -1,5 +1,3 @@
-export const fetchCache = 'force-no-store';
-
 import HomeProductList from "./HomeProductList";
 import CollectionList from "./CollectionList";
 import SectionLoading from "./SectionLoading";
