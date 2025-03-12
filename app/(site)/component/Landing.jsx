@@ -1,3 +1,5 @@
+export const fetchCache = 'force-no-store';
+
 import HomeProductList from "./HomeProductList";
 import CollectionList from "./CollectionList";
 import SectionLoading from "./SectionLoading";
@@ -6,7 +8,6 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { getCollectionBySlug, getProductById } from "../../../sanity/sanity-utils";
 
-export const fetchCache = 'force-no-store';
 export default async function Landing() {
     try {
         const selectedCollection = await getCollectionBySlug("landing");
