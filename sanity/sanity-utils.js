@@ -36,7 +36,7 @@ export async function getAllProducts() {
       variantPrice
     }
   }`;
-  return await client.fetch(query, { cache: "no-store" });
+  return await client.fetch(query);
 }
 
 // Fetch a single product by ID
@@ -71,7 +71,7 @@ export async function getProductById(id) {
       variantPrice
     }
   }`;
-  return await client.fetch(query, { id, cache: "no-store" });
+  return await client.fetch(query, { id });
 }
 
 // Fetch a product by slug
@@ -106,7 +106,7 @@ export async function getProductBySlug(slug) {
       variantPrice
     }
   }`;
-  return await client.fetch(query, { slug, cache: "no-store" });
+  return await client.fetch(query, { slug });
 }
 
 // Fetch all collections
@@ -120,7 +120,7 @@ export async function getAllCollections() {
     "collectionImage": collectionImage.asset->url,
     products
   }`;
-  return await client.fetch(query, { cache: "no-store" });
+  return await client.fetch(query);
 }
 
 // Fetch a single collection by slug
@@ -134,5 +134,5 @@ export async function getCollectionBySlug(slug) {
     "collectionImage": collectionImage.asset->url,
     products
   }`;
-  return await client.fetch(query, { slug, cache: "no-store" });
+  return await client.fetch(query, { slug });
 }
